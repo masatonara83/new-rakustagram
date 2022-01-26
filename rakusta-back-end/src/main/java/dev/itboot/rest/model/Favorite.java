@@ -7,28 +7,28 @@ package dev.itboot.rest.model;
  */
 public class Favorite {
 
-	private Integer favoriteId;
-	private Integer userId;
-	private Integer articleId;
+	private Long favoriteId;
+	private Long userId;
+	private Long articleId;
 	private User user;
 	
 	//getter and setter
-	public Integer getFavoriteId() {
+	public Long getFavoriteId() {
 		return favoriteId;
 	}
-	public void setFavoriteId(Integer favoriteId) {
+	public void setFavoriteId(Long favoriteId) {
 		this.favoriteId = favoriteId;
 	}
-	public Integer getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
-	public void setUserId(Integer userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
-	public Integer getArticleId() {
+	public Long getArticleId() {
 		return articleId;
 	}
-	public void setArticleId(Integer articleId) {
+	public void setArticleId(Long articleId) {
 		this.articleId = articleId;
 	}
 	public User getUser() {

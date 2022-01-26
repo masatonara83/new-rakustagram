@@ -10,8 +10,8 @@ import java.util.List;
  */
 public class Article {
 
-	private Integer 	articleId;
-	private Integer 	userId;
+	private Long 	articleId;
+	private Long 	userId;
 	private String 		content;
 	private Timestamp 	articlePostDate;
 	private User 		user;
@@ -25,16 +25,16 @@ public class Article {
 	private List<Comment> commentList;
 	
 	//getter and setter
-	public Integer getArticleId() {
+	public Long getArticleId() {
 		return articleId;
 	}
-	public void setArticleId(Integer articleId) {
+	public void setArticleId(Long articleId) {
 		this.articleId = articleId;
 	}
-	public Integer getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
-	public void setUserId(Integer userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 	public String getContent() {

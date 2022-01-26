@@ -4,30 +4,30 @@ import java.sql.Timestamp;
 
 public class Comment {
 
-	private Integer commentId;
-	private Integer userId;
-	private Integer articleId;
+	private Long commentId;
+	private Long userId;
+	private Long articleId;
 	private String comment;
 	private Timestamp commentPostDate;
 	private User user;
 	
 	//getter and setter
-	public Integer getCommentId() {
+	public Long getCommentId() {
 		return commentId;
 	}
-	public void setCommentId(Integer commentId) {
+	public void setCommentId(Long commentId) {
 		this.commentId = commentId;
 	}
-	public Integer getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
-	public void setUserId(Integer userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
-	public Integer getArticleId() {
+	public Long getArticleId() {
 		return articleId;
 	}
-	public void setArticleId(Integer articleId) {
+	public void setArticleId(Long articleId) {
 		this.articleId = articleId;
 	}
 	public String getComment() {

@@ -7,21 +7,21 @@ package dev.itboot.rest.model;
  */
 public class Image {
 
-	private Integer imageId;
-	private Integer articleId;
+	private Long imageId;
+	private Long articleId;
 	private String 	imagePath;
 	
 	//getter and setter
-	public Integer getImageId() {
+	public Long getImageId() {
 		return imageId;
 	}
-	public void setImageId(Integer imageId) {
+	public void setImageId(Long imageId) {
 		this.imageId = imageId;
 	}
-	public Integer getArticleId() {
+	public Long getArticleId() {
 		return articleId;
 	}
-	public void setArticleId(Integer articleId) {
+	public void setArticleId(Long articleId) {
 		this.articleId = articleId;
 	}
 	public String getImagePath() {

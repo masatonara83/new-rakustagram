@@ -12,7 +12,7 @@ import java.util.List;
 public class User {
 
 	//ユーザーID
-	private 	Integer 		userId;
+	private 	Long			userId;
 	//ユーザーネーム
 	private 	String 			userName;	
 	//ユーザーの本名
@@ -36,10 +36,10 @@ public class User {
 	private 	List<Article> 	articleList;
 	
 	//ゲッターとセッター
-	public Integer getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
-	public void setUserId(Integer userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 	public String getUserName() {

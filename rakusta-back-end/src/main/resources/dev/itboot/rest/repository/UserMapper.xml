@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dev.itboot.rest.repository.UserMapper">
+
+	<resultMap type="dev.itboot.rest.model.User" id="userMap">
+        <id column="user_id" property="userId"/>
+        <result column="user_name" property="userName"/>
+        <result column="user_full_name" property="userFullName"/>
+        <result column="user_overview" property="userOverview"/>
+        <result column="user_mail_address" property="userMailAddress"/>
+        <result column="user_password" property="userPassword"/>
+        <result column="user_image_path" property="userImagePath"/>
+        <result column="user_registration_date" property="userRegistrationDate"/>
+        <result column="update_date" property="updateDate"/>
+    </resultMap>
+	
+	
+	<select id="findAllUsers"  resultType="User">
+		SELECT * from users
+	</select>
+	
+	<select id="findById" resultMap="userMap">
+		select * from users where user_id = #{userId}
+	</select>
+	
+	<insert id="insert" useGeneratedKeys="true" keyProperty="userId" parameterType="User">
+		insert into users(user_name, user_full_name, user_mail_address, user_password) values (#{userName}, #{userFullName}, #{userMailAddress}, #{userPassword})
+	</insert>
+	
+	<select id="notFollowingUsers" resultType="User">
+		select user_id, user_name, user_image_path from users 
+		where user_id not in (
+		<foreach collection="followingUserIdList" item="followingUserId" separator=",">
+			${followingUserId}
+		</foreach>
+		) and user_id != #{userId}
+	</select>
+	
+	
+</mapper>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dev.itboot.rest.repository.ArticleMapper">
+	
+	<resultMap type="dev.itboot.rest.model.Article" id="articleMap">
+        <id column="article_id" property="articleId"></id>
+        <result column="user_id" property="userId"></result>
+       	<result column="content" property="content"></result>
+       	<result column="article_post_date" property="articlePostDate"></result>
+       	<association property="user" resultMap="userMap"></association>
+       	<collection property="imageList" ofType="Image">
+       		<id column="image_id" property="imageId"></id>
+       		<id column="i_article_id" property="articleId"></id>
+       		<result column="image_path" property="imagePath"></result>
+       	</collection>
+       	<collection property="tagList" ofType="Tag">
+       		<id column="tag_id" property="tagId"></id>
+       		<id column="article_id" property="articleId"/>
+       		<result column="tag_name" property="tagName"></result>
+       	</collection>
+       	<collection property="commentList" ofType="Comment">
+       		<id column="comment_id" property="commentId"/>
+       		<id column="c_user_id" property="userId"/>
+       		<id column="article_id" property="articleId"/>
+       		<result column="comment" property="comment"/>
+       		<result column="c_comment_post_date" property="commentPostDate"/>
+       	</collection>
+       	<collection property="favoriteList" ofType="Favorite">
+       		<result column="favorite_id" property="favoriteId"/>
+       		<result column="f_user_id" property="userId"/>
+       		<result column="f_article_id" property="articleId"/>
+       	</collection>
+	</resultMap>
+	
+	<resultMap type="dev.itboot.rest.model.User" id="userMap">
+		<id column="user_id" property="userId"/>
+		<result column="user_name" property="userName"/>
+		<result column="u_user_image_path" property="userImagePath"/>
+	</resultMap>
+	
+	
+	<select id="findFollowingArticle" resultMap="articleMap">
+		select 
+		a.article_id, a.user_id, a.content, a.article_post_date, 
+		u.user_id, u.user_name, u.user_image_path as u_user_image_path, 
+		i.image_id, i.article_id as i_article_id, i.image_path, 
+		t.tag_id, t.article_id, t.tag_name, 
+		f.favorite_id, f.user_id as f_user_id, f.article_id as f_article_id,  
+		c.comment_id, c.user_id as c_user_id, c.article_id, c.comment, c.comment_post_date  
+		from articles a 
+		left join users u on a.user_id = u. user_id 
+		left join images i on a.article_id = i.article_id 
+		left join tags t on a.article_id = t.article_id 
+		left join favorites f on a.article_id = f.article_id 
+		left join comments c on a.article_id = c.article_id 
+		where a.user_id in (
+		<foreach collection="followingIdList" item="followerId" separator=",">
+			${followerId}
+		</foreach>
+		) order by a.article_post_date desc
+	</select>
+	
+</mapper>
