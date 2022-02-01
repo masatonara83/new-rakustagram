@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import dev.itboot.rest.form.LoginForm;
 import dev.itboot.rest.model.User;
 import dev.itboot.rest.repository.UserMapper;
 
@@ -26,8 +27,16 @@ public class UserService {
 	
 	public User insert(User user) {
 		mapper.insert(user);
-		
 		return mapper.findById(user.getUserId());
+	}
+	
+	public User saveUser(User user) {
+		mapper.saveUser(user);
+		return findById(user.getUserId());
+	}
+	
+	public User loginAuth(LoginForm form) {
+		return mapper.loginAuth(form);
 	}
 	
 }

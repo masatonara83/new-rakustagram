@@ -7,10 +7,12 @@
 <mapper namespace="dev.itboot.rest.repository.FollowMapper">
 	
 	
-	<select id="findByAllFollowing"  resultType="Follow" parameterType="Integer">
+	<select id="findByAllFollowing"  resultType="Follow" parameterType="Long">
 		SELECT * from follows where following_id = #{userId}
 	</select>
 	
-	
+	<insert id="following">
+		insert into follows (following_id, follower_id) values (#{followingId}, #{followerId})
+	</insert>
 	
 </mapper>

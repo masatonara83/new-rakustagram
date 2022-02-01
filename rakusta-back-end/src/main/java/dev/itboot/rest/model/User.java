@@ -28,7 +28,7 @@ public class User {
 	private 	Timestamp 		userRegistrationDate;
 	//更新日
 	private 	Date 			updateDate;
-	//
+	//プロフィール画像
 	private		String			userImagePath;
 	//FollowをListで格納
 	private 	List<Follow> 	followList;

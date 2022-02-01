@@ -27,9 +27,21 @@
 		select * from users where user_id = #{userId}
 	</select>
 	
+	<select id="loginAuth" resultType="User">
+		SELECT * FROM users where user_mail_address = #{userMailAddress} and user_password = #{userPassword}
+	</select>
+	
 	<insert id="insert" useGeneratedKeys="true" keyProperty="userId" parameterType="User">
 		insert into users(user_name, user_full_name, user_mail_address, user_password) values (#{userName}, #{userFullName}, #{userMailAddress}, #{userPassword})
 	</insert>
+	
+	<update id="saveUser" parameterType="User">
+		update users 
+		set user_name = #{userName}, user_full_name = #{userFullName}, 
+		user_overview = #{userOverview}, user_mail_address = #{userMailAddress}, 
+		user_password = #{userPassword}, user_image_path = #{userImagePath} 
+		where user_id = #{userId}
+	</update>
 	
 	<select id="notFollowingUsers" resultType="User">
 		select user_id, user_name, user_image_path from users 

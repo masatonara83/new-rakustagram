@@ -11,4 +11,6 @@ import dev.itboot.rest.model.Article;
 public interface ArticleMapper {
 
 	public List<Article> findFollowingArticle(@Param("followingIdList") List<Long> followingIdList);
+	
+	public Long insertArticle(Article article);
 }

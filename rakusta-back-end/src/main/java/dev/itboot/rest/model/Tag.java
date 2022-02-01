@@ -7,21 +7,21 @@ package dev.itboot.rest.model;
  */
 public class Tag {
 
-	private Integer tagId;
-	private Integer articleId;
+	private Long tagId;
+	private Long articleId;
 	private String 	tagName;
 	
 	//getter and setter
-	public Integer getTagId() {
+	public Long getTagId() {
 		return tagId;
 	}
-	public void setTagId(Integer tagId) {
+	public void setTagId(Long tagId) {
 		this.tagId = tagId;
 	}
-	public Integer getArticleId() {
+	public Long getArticleId() {
 		return articleId;
 	}
-	public void setArticleId(Integer articleId) {
+	public void setArticleId(Long articleId) {
 		this.articleId = articleId;
 	}
 	public String getTagName() {

@@ -42,6 +42,10 @@
 		<result column="u_user_image_path" property="userImagePath"/>
 	</resultMap>
 	
+	<resultMap type="dev.itboot.rest.model.User" id="fUser">
+		<id column="user_id" property="userId"/>
+	</resultMap>
+	
 	
 	<select id="findFollowingArticle" resultMap="articleMap">
 		select 
@@ -63,5 +67,9 @@
 		</foreach>
 		) order by a.article_post_date desc
 	</select>
+	
+	<insert id="articleInsert" parameterType="Article" useGeneratedKeys="true" keyProperty="articleId">
+		insert into articles(user_id, content) values(#{userId}, #{content})
+	</insert>
 	
 </mapper>
