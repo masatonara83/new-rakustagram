@@ -12,14 +12,15 @@ public class Image {
 	private String 	imagePath;
 	
 	//getter and setter
+	
+	public Long getArticleId() {
+		return articleId;
+	}
 	public Long getImageId() {
 		return imageId;
 	}
 	public void setImageId(Long imageId) {
 		this.imageId = imageId;
-	}
-	public Long getArticleId() {
-		return articleId;
 	}
 	public void setArticleId(Long articleId) {
 		this.articleId = articleId;
@@ -32,7 +33,7 @@ public class Image {
 	}
 	@Override
 	public String toString() {
-		return "Image [imageId=" + imageId + ", articleId=" + articleId + ", imagePath=" + imagePath + "]";
+		return "Image [" + ", articleId=" + articleId + ", imagePath=" + imagePath + "]";
 	}
 	
 	

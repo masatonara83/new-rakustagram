@@ -23,6 +23,7 @@ export const NewPost: VFC<Props> = memo((props) => {
 
   const onChangeContent = (e: ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value)
   const onChangeTag = (e: ChangeEvent<HTMLInputElement>) => setTag(e.target.value)
+  
 
 
   const getImage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,8 +44,9 @@ export const NewPost: VFC<Props> = memo((props) => {
     }
     data.append('form', new Blob([JSON.stringify(form)],{type : 'application/json'}))
 
-    articlePost(data)
-  }, [])
+    articlePost({data, onClose})
+    onClickCloseNewPost()
+  }, [image,content,tag])
 
   const onClickCloseNewPost = useCallback(() => {
     setPreview('')

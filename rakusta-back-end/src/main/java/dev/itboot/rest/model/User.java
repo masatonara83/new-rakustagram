@@ -21,15 +21,21 @@ public class User {
 	private 	String 			userOverview;
 	//メールアドレス
 	private 	String 			userMailAddress;
-	//パスワード
-	private 	String 			userPassword;
-	
 	//登録日	
 	private 	Timestamp 		userRegistrationDate;
 	//更新日
 	private 	Date 			updateDate;
-	//プロフィール画像
-	private		String			userImagePath;
+	
+	private Password password;
+	
+	private UserImage image;
+	
+	//投稿数
+	private Integer articleCount;
+	//フォローしている数
+	private Integer followingCount;
+	//フォローされている数
+	private Integer followerCount;
 	//FollowをListで格納
 	private 	List<Follow> 	followList;
 	//ArticleをListで格納
@@ -66,12 +72,6 @@ public class User {
 	public void setUserMailAddress(String userMailAddress) {
 		this.userMailAddress = userMailAddress;
 	}
-	public String getUserPassword() {
-		return userPassword;
-	}
-	public void setUserPassword(String userPassword) {
-		this.userPassword = userPassword;
-	}
 	public Timestamp getUserRegistrationDate() {
 		return userRegistrationDate;
 	}
@@ -83,12 +83,6 @@ public class User {
 	}
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
-	}
-	public String getUserImagePath() {
-		return userImagePath;
-	}
-	public void setUserImagePath(String userImagePath) {
-		this.userImagePath = userImagePath;
 	}
 	public List<Follow> getFollowList() {
 		return followList;
@@ -102,13 +96,45 @@ public class User {
 	public void setArticleList(List<Article> articleList) {
 		this.articleList = articleList;
 	}
+	public Integer getArticleCount() {
+		return articleCount;
+	}
+	public void setArticleCount(Integer articleCount) {
+		this.articleCount = articleCount;
+	}
+	public Integer getFollowingCount() {
+		return followingCount;
+	}
+	public void setFollowingCount(Integer followingCount) {
+		this.followingCount = followingCount;
+	}
+	public Integer getFollowerCount() {
+		return followerCount;
+	}
+	public void setFollowerCount(Integer followerCount) {
+		this.followerCount = followerCount;
+	}
+	public Password getPassword() {
+		return password;
+	}
+	public void setPassword(Password password) {
+		this.password = password;
+	}
+	public UserImage getImage() {
+		return image;
+	}
+	public void setImage(UserImage image) {
+		this.image = image;
+	}
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", userName=" + userName + ", userFullName=" + userFullName
-				+ ", userOverview=" + userOverview + ", userMailAddress=" + userMailAddress + ", userPassword="
-				+ userPassword + ", userRegistrationDate=" + userRegistrationDate + ", updateDate=" + updateDate
-				+ ", userImagePath=" + userImagePath + ", followList=" + followList + ", articleList=" + articleList
+				+ ", userOverview=" + userOverview + ", userMailAddress=" + userMailAddress + ", userRegistrationDate="
+				+ userRegistrationDate + ", updateDate=" + updateDate + ", password=" + password + ", image="
+				+ image + ", articleCount=" + articleCount + ", followingCount=" + followingCount
+				+ ", followerCount=" + followerCount + ", followList=" + followList + ", articleList=" + articleList
 				+ "]";
 	}
+	
 	
 }

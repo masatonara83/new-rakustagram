@@ -1,19 +1,28 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import axios from "axios";
-import { useCallback, useState, VFC } from "react";
-import { useHistory } from "react-router-dom";
+import { useCallback, useState} from "react";
 import { UseMassage } from "./useMessage";
+import { UseTimeLine } from "./useTimeLine";
+
+type Props = {
+  data: FormData;
+  onClose: () => void;
+}
 
 export const UseArticlePost =() => {
-  const history = useHistory()
+  
   const {showMessage} = UseMassage();
+  const {getFollowArticles} = UseTimeLine()
   const [loading, setLoading] = useState(false);
 
-  const articlePost = useCallback((data) => {
+  const articlePost = useCallback((props: Props) => {
+    const { data, onClose } = props
     setLoading(true)
-    console.log(data);
     axios.post("http://localhost:8080/api/v1/article/",data)
-    .then( () => {
-      history.push("/timeline")
+    .then( (res) => {
+      showMessage({title: "投稿にしました", status: "success"})
+      getFollowArticles(5)
+      onClose()
     }).catch(() => {
       showMessage({title: "投稿に失敗しました", status: "error"})
       setLoading(false)

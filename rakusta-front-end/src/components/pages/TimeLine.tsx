@@ -1,22 +1,54 @@
-import { Box, Button, Image, Spacer, Stack, Text, Wrap, WrapItem } from "@chakra-ui/react";
-import { memo, useEffect, VFC } from "react";
+import { Box, Button, Center, Image, Spacer, Spinner, Stack, Text, Wrap, WrapItem } from "@chakra-ui/react";
+import { memo, useEffect, useState, VFC } from "react";
+import { useLoginUser } from "../../hooks/useLoginUser";
 import { UseTimeLine } from "../../hooks/useTimeLine";
 import { UserCard } from "../organisms/user/UserCard";
 
 export const TimeLine: VFC = memo(() => {
 
-  const {getFollowArticles, articleList} = UseTimeLine()
+  const {loginUser} = useLoginUser()
+  const {getFollowArticles, articleList, loading} = UseTimeLine()
 
-  useEffect(() => getFollowArticles(5),[getFollowArticles])
+  const [userId, setUserId] = useState<number>(0);
+
+
+  useEffect(() => { 
+    console.log(userId)
+    getFollowArticles(userId)
+  }
+  ,[getFollowArticles,loginUser,userId])
+
+  useEffect(() => {
+    setUserId(loginUser?.userId ?? 0)
+  },[loginUser,userId])
+
+  console.log(localStorage.getItem('KEY_LOGIN_USER'))
 
   return (
+    <>
+    {loading ? (
+      <Center h="100vh">
+        <Spinner 
+          thickness='4px'
+          speed='0.65s'
+          emptyColor='gray.200'
+          color='blue.500'
+          size='xl'
+        />
+      </Center>
+    ) : (
     <Wrap p={{base: 4, md: 10}} justify="center" mt="7" spacing={7}>
       <Stack spacing={10}>
-        {articleList?.map((article) => (
-          <WrapItem  key={article.id}>
-              <UserCard articleId={article.id} userId={article.userId} content={article.content} 
+        {articleList?.map((article, index) => (
+          <WrapItem  key={article.articleId}>
+              <UserCard 
+              key={index}
+              articleId={article.articleId} 
+              userId={article.userId} 
+              content={article.content}
+              articleUserName={article.user.userName}
               userImage={
-                article.user.userImagePath? article.user.userImagePath
+                article.user.image.imagePath? article.user.image.imagePath
                  :
                  `${process.env.PUBLIC_URL}/no_image.png`}
               imageList={article.imageList}/>
@@ -63,5 +95,7 @@ export const TimeLine: VFC = memo(() => {
         </Stack>
       </WrapItem>
     </Wrap>
+    )}
+  </>
   )
 })

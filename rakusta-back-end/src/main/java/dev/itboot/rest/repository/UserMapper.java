@@ -54,4 +54,19 @@ public interface UserMapper {
 	public List<User> notFollowingUsers(
 			@Param("followingUserIdList") List<Long> followingUserIdList, 
 			@Param("userId") Long userId);
+	
+	/**
+	 * 投稿・フォロー・フォロワー数を出力
+	 * @param userId
+	 * @return　投稿・フォロー・フォロワー数
+	 */
+	public User countCheck(Long userId);
+	
+	/**
+	 * idとパスワードからユーザーがいるか確認
+	 * @param userId password
+	 * @return
+	 */
+	public User findByUserIdAndPassword(@Param("userId") Long userId, @Param("password") String password);
+	
 }

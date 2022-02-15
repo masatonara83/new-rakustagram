@@ -3,28 +3,30 @@ import { useCallback, useState } from "react"
 import { useHistory } from "react-router-dom";
 import { LoginForm } from "../types/api/loginForm";
 import { User } from "../types/api/user"
+import { useLoginUser } from "./useLoginUser";
 import { UseMassage } from "./useMessage";
 
 export const UseAuth = () => {
   const history = useHistory();
-  const [loginUser, setLoginUser] = useState("");
   const {showMessage} = UseMassage();
+  const {setLoginUser} = useLoginUser()
 
   const [loading, setLoading] = useState(false);
 
   const login = useCallback((loginForm: LoginForm) => {
-    const {userMailAddress, userPassword} = loginForm;
+    const {userMailAddress, password} = loginForm;
     setLoading(true)
     axios.get<User>('http://localhost:8080/api/v1/login/', {
       params: {
         userMailAddress: userMailAddress,
-        userPassword: userPassword
+        password: password
       }
     })
     .then((res) => {
       if(res.data) {
+        setLoginUser(res.data)
         showMessage({title: "ログインに成功しました", status: "success"});
-        history.push("/timeline")
+        history.push("/rakustagram")
       } else {
         showMessage({title: "ユーザーが見つかりません", status: "error"});
         setLoading(false)
@@ -33,6 +35,6 @@ export const UseAuth = () => {
       showMessage({title: "ログインできません", status: "error"})
       setLoading(false)
     });
-  }, [setLoginUser]);
+  }, [setLoginUser,showMessage,history]);
   return {login, loading}
 };

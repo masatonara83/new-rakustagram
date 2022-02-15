@@ -1,24 +1,34 @@
-export type Article = {
-    id: number;
+  export type Article = {
+    articleId: number;
     userId: number;
     content: string;
-    articlePostDate: Date;
+    articlePostDate: number;
+    counrId: number;
     user: {
       userId: number;
       userName: string;
       userFullName: string;
       userOverview: string;
       userMailAddress: string;
-      userPassword: string;
-      userRegistrationDate: Date;
-      updateDate: Date;
-      userImagePath: string;
+      userRegistrationDate: number;
+      updateDate: number;
+      password: {
+        passwordId: number;
+        password: string;
+      };
+      image: {
+        userImageId: number;
+        imagePath: string
+      };
+      articleCount: number;
+      followingCount: number;
+      followerCount: number;
       followList: [
         {
           followId: number;
           followingId: number;
           followerId: number;
-          user: string;
+          user: string
         }
       ];
       articleList: [
@@ -29,14 +39,14 @@ export type Article = {
       {
         imageId: number;
         articleId: number;
-        imagePath: string;
+        imagePath: string
       }
     ];
     tagList: [
       {
         tagId: number;
         articleId: number;
-        tagName: string;
+        tagName: string
       }
     ];
     favoriteList: [
@@ -50,16 +60,25 @@ export type Article = {
           userFullName: string;
           userOverview: string;
           userMailAddress: string;
-          userPassword: string;
-          userRegistrationDate: Date;
-          updateDate: Date;
-          userImagePath: string;
+          userRegistrationDate: number;
+          updateDate: number;
+          password: {
+            passwordId: number;
+            password: string
+          };
+          image: {
+            userImageId: number;
+            imagePath: string
+          };
+          articleCount: number;
+          followingCount: number;
+          followerCount: number;
           followList: [
             {
               followId: number;
               followingId: number;
               followerId: number;
-              user: string;
+              user: string
             }
           ];
           articleList: [
@@ -74,23 +93,32 @@ export type Article = {
         userId: number;
         articleId: number;
         comment: string;
-        commentPostDate: Date;
+        commentPostDate: number;
         user: {
-          userId: 0;
+          userId: number;
           userName: string;
           userFullName: string;
           userOverview: string;
           userMailAddress: string;
-          userPassword: string;
-          userRegistrationDate: Date;
-          updateDate: Date;
-          userImagePath: string;
+          userRegistrationDate: number;
+          updateDate: number;
+          password: {
+            passwordId: number;
+            password: string;
+          };
+          image: {
+            userImageId: number;
+            imagePath: string;
+          };
+          articleCount: number;
+          followingCount: number;
+          followerCount: number;
           followList: [
             {
               followId: number;
               followingId: number;
               followerId: number;
-              user: string
+              user: string;
             }
           ];
           articleList: [

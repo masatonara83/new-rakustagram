@@ -1,5 +1,6 @@
 package dev.itboot.rest.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +34,8 @@ public class ArticleController {
 	
 	@Operation(summary = "画像投稿をします")
 	@PostMapping("")
-	public Article insertArticle(@RequestPart("file") MultipartFile image, @RequestPart("form") ArticleForm form ) {
-		System.out.println(image);
-		System.out.println(form);
+	public Article insertArticle(@RequestPart("file") MultipartFile image, @RequestPart("form") ArticleForm form ) throws IOException {
 		
-		return null;
+		return service.insertArticle(form, image);
 	}
 }

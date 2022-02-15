@@ -21,7 +21,7 @@ export const Login: VFC = memo(() => {
   const onClickLogin = () => {
     const loginForm = {
       userMailAddress: mailAddress,
-      userPassword: password
+      password: password
     }
     login(loginForm)
   }

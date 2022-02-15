@@ -12,10 +12,32 @@
         <result column="user_full_name" property="userFullName"/>
         <result column="user_overview" property="userOverview"/>
         <result column="user_mail_address" property="userMailAddress"/>
-        <result column="user_password" property="userPassword"/>
-        <result column="user_image_path" property="userImagePath"/>
         <result column="user_registration_date" property="userRegistrationDate"/>
         <result column="update_date" property="updateDate"/>
+        <association property="password" resultMap="passwordMap"></association>
+        <association property="image" resultMap="userImageMap"></association>
+        <collection property="articleList" ofType="Article">
+        	<id column="article_id" property="articleId"></id>
+	        <result column="user_id" property="userId"></result>
+	       	<result column="content" property="content"></result>
+	       	<result column="article_post_date" property="articlePostDate"></result>
+	       	<result column="count_id" property="count_id"></result>
+	       	<collection property="imageList" ofType="Image">
+	       		<id column="image_id" property="imageId"></id>
+	       		<id column="i_article_id" property="articleId"></id>
+	       		<result column="image_path" property="imagePath"></result>
+       		</collection>
+        </collection>
+    </resultMap>
+    
+    <resultMap type="dev.itboot.rest.model.Password" id="passwordMap">
+    	<id column="password_id" property="passwordId" />
+    	<result column="password" property="password"/>
+    </resultMap>
+    
+    <resultMap type="dev.itboot.rest.model.UserImage" id="userImageMap">
+    	<result column="user_id" property="userId" />
+    	<result column="ui_image_path" property="imagePath"/>
     </resultMap>
 	
 	
@@ -24,24 +46,49 @@
 	</select>
 	
 	<select id="findById" resultMap="userMap">
-		select * from users where user_id = #{userId}
+		select 
+		u.user_id, u.user_name, u.user_full_name, u.user_mail_address ,u.user_overview,
+		ui.image_path as ui_image_path,
+		a.article_id, a.content,
+		i.image_id, i.image_path 
+		from users u 
+		left join user_images ui on u.user_id = ui.user_id
+		left join articles a on u.user_id = a.user_id 
+		left join images i on a.article_id = i.article_id  
+		where a.user_id = #{userId}  
+		order by a.article_post_date desc
 	</select>
 	
-	<select id="loginAuth" resultType="User">
-		SELECT * FROM users where user_mail_address = #{userMailAddress} and user_password = #{userPassword}
+	<select id="loginAuth" resultMap="userMap">
+		SELECT 
+		u.user_id, u.user_name, u.user_full_name, u.user_mail_address ,u.user_overview,
+		ui.image_path as ui_image_path
+		FROM users u
+		left join passwords p on u.password = p.password_id
+		left join user_images ui on u.user_id = ui.user_id
+		where u.user_mail_address = #{userMailAddress} and p.password = #{password}
+	</select>
+	
+	<select id="findByUserIdAndPassword" resultMap="userMap">
+		SELECT
+		u.user_id, u.user_name, p.password_id, p.password 
+		from users u 
+		left join passwords p on u.password = p.password_id
+		where u.user_id = #{userId} and p.password = #{password}
 	</select>
 	
 	<insert id="insert" useGeneratedKeys="true" keyProperty="userId" parameterType="User">
 		insert into users(user_name, user_full_name, user_mail_address, user_password) values (#{userName}, #{userFullName}, #{userMailAddress}, #{userPassword})
 	</insert>
 	
+	
 	<update id="saveUser" parameterType="User">
 		update users 
 		set user_name = #{userName}, user_full_name = #{userFullName}, 
-		user_overview = #{userOverview}, user_mail_address = #{userMailAddress}, 
-		user_password = #{userPassword}, user_image_path = #{userImagePath} 
+		user_overview = #{userOverview}, user_mail_address = #{userMailAddress}
 		where user_id = #{userId}
 	</update>
+	
 	
 	<select id="notFollowingUsers" resultType="User">
 		select user_id, user_name, user_image_path from users 
@@ -52,5 +99,17 @@
 		) and user_id != #{userId}
 	</select>
 	
+	<resultMap type="User" id="countMap">
+		<result column="article_count" property="articleCount"></result>
+		<result column="following_count" property="followingCount"></result>
+		<result column="follower_count" property="followerCount"></result>
+	</resultMap>
+	
+	<select id="countCheck" resultMap="countMap">
+		select * from 
+		(select count(article_id) as article_count from articles where user_id = #{userId}) a, 
+		(select count(following_id) as following_count from follows where following_id = #{userId}) b, 
+		(select count(follower_id) as follower_count from follows where follower_id = #{userId}) c;
+	</select>
 	
 </mapper>

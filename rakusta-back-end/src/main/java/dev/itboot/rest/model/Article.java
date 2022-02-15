@@ -14,6 +14,7 @@ public class Article {
 	private Long 	userId;
 	private String 		content;
 	private Timestamp 	articlePostDate;
+	private Integer counrId;
 	private User 		user;
 	//ImageをListで格納
 	private List<Image> imageList;
@@ -80,12 +81,19 @@ public class Article {
 	public void setUser(User user) {
 		this.user = user;
 	}
+	public Integer getCounrId() {
+		return counrId;
+	}
+	public void setCounrId(Integer counrId) {
+		this.counrId = counrId;
+	}
 	@Override
 	public String toString() {
 		return "Article [articleId=" + articleId + ", userId=" + userId + ", content=" + content + ", articlePostDate="
-				+ articlePostDate + ", user=" + user + ", imageList=" + imageList + ", tagList=" + tagList
-				+ ", favoriteList=" + favoriteList + ", commentList=" + commentList + "]";
+				+ articlePostDate + ", counrId=" + counrId + ", user=" + user + ", imageList=" + imageList
+				+ ", tagList=" + tagList + ", favoriteList=" + favoriteList + ", commentList=" + commentList + "]";
 	}
+	
 	
 	
 }

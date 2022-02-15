@@ -16,7 +16,11 @@ import dev.itboot.rest.form.ArticleForm;
 import dev.itboot.rest.model.Article;
 import dev.itboot.rest.model.Follow;
 import dev.itboot.rest.model.Image;
+import dev.itboot.rest.model.Tag;
 import dev.itboot.rest.repository.ArticleMapper;
+import dev.itboot.rest.repository.ImageMapper;
+import dev.itboot.rest.repository.TagMapper;
+import dev.itboot.rest.utility.ConversionUtil;
 
 @Service
 @Transactional
@@ -26,54 +30,52 @@ public class ArticleService {
 	private FollowService followService;
 
 	@Autowired
-	private ArticleMapper mapper;
+	private ArticleMapper articleMapper;
+	
+	@Autowired
+	private ImageMapper imageMapper;
+	
+	@Autowired
+	private TagMapper tagMapper;
 	
 	
 	public List<Article> findFollowingArticle(Long userId){
 		List<Follow> followingList = followService.findByAllFollowing(userId);
 		List<Long> followerIdList = followingList.stream().map(f -> f.getFollowerId()).collect(Collectors.toList());
 		followerIdList.add(userId);
-		return mapper.findFollowingArticle(followerIdList);
+		return articleMapper.findFollowingArticle(followerIdList);
 	}
 	
 	public Article insertArticle(ArticleForm form, MultipartFile file) throws IOException {
 		Article article = new Article();
-		BeanUtils.copyProperties(file, article);
-		mapper.insertArticle(article);
+		BeanUtils.copyProperties(form, article);
 		
-		String fileEntension = null;
+		articleMapper.insertArticle(article);
 		
-		try {
-			fileEntension = getEntension(file.getOriginalFilename());
-		} catch (Exception e) {
-			e.printStackTrace();
+		String[] tagArray = ConversionUtil.stringConversion(form.getTag());
+		if(tagArray != null) {
+			for (String string : tagArray) {
+				Tag tag = new Tag();
+				tag.setArticleId(article.getArticleId());
+				tag.setTagName(string);
+				tagMapper.insertTag(tag);
+			}
 		}
 		
-		String base64FileString = Base64.getEncoder().encodeToString(file.getBytes());
-		if("jpg".equals(fileEntension)) {
-			base64FileString = "data:image/jpeg;base64," + base64FileString;
-		} else if("png".equals(fileEntension)) {
-			base64FileString = "data:image/png;base64," + base64FileString;
-		}
+		//imagesテーブルへのinsert処理
+		String base64FileString = ConversionUtil.imageConversion(file);
 		
 		Image image = new Image();
-		image.setImageId(article.getArticleId());
+		image.setArticleId(article.getArticleId());
 		image.setImagePath(base64FileString);
 		
-		return null;
+		imageMapper.insertImage(image);
 		
+		return findByArticle(article.getArticleId());
 		
 	}
 	
-	private String getEntension(String fileName) throws Exception {
-		if(fileName == null) {
-			throw new FileNotFoundException("ファイル名がありません");
-		}
-		
-		int point = fileName.lastIndexOf(".");
-		if(point == -1) {
-			throw new FileNotFoundException("形式が正しくありません");
-		}
-		return fileName.substring(point + 1);
+	public Article findByArticle(Long articleId) {
+		return articleMapper.findByArticle(articleId);
 	}
 }

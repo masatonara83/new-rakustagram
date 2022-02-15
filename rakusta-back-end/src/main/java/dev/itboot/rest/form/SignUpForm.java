@@ -1,6 +1,6 @@
 package dev.itboot.rest.form;
 
-public class UserForm {
+public class SignUpForm {
 
 	private String userName;
 	
@@ -8,7 +8,7 @@ public class UserForm {
 	
 	private String userMailAddress;
 	
-	private String userPassword;
+	private String password;
 
 	public String getUserName() {
 		return userName;
@@ -34,19 +34,21 @@ public class UserForm {
 		this.userMailAddress = userMailAddress;
 	}
 
-	public String getUserPassword() {
-		return userPassword;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setUserPassword(String userPassword) {
-		this.userPassword = userPassword;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	@Override
 	public String toString() {
-		return "UserForm [userName=" + userName + ", userFullName=" + userFullName + ", userMailAddress="
-				+ userMailAddress + ", userPassword=" + userPassword + "]";
+		return "SignUpForm [userName=" + userName + ", userFullName=" + userFullName + ", userMailAddress="
+				+ userMailAddress + ", password=" + password + "]";
 	}
+
+	
 	
 	
 }

@@ -4,7 +4,7 @@ public class LoginForm {
 
 	private String userMailAddress;
 	
-	private String userPassword;
+	private String password;
 
 	public String getUserMailAddress() {
 		return userMailAddress;
@@ -14,18 +14,19 @@ public class LoginForm {
 		this.userMailAddress = userMailAddress;
 	}
 
-	public String getUserPassword() {
-		return userPassword;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setUserPassword(String userPassword) {
-		this.userPassword = userPassword;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	@Override
 	public String toString() {
-		return "LoginForm [userMailAddress=" + userMailAddress + ", userPassword=" + userPassword + "]";
+		return "LoginForm [userMailAddress=" + userMailAddress + ", password=" + password + "]";
 	}
+
 	
 	
 }

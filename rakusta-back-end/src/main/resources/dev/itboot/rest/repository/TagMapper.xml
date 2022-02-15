@@ -4,10 +4,10 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="dev.itboot.rest.repository.ImageMapper">
+<mapper namespace="dev.itboot.rest.repository.TagMapper">
 	
-	<insert id="insertImage" parameterType="Image">
-		insert into images(article_id, image_path) values(#{articleId}, #{imagePath})
+	<insert id="insertTag" parameterType="Tag">
+		insert into tags(article_id, tag_name) values(#{articleId}, #{tagName})
 	</insert>
 	
 	

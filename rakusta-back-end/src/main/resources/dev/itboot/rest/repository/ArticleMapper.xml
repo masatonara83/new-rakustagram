@@ -39,7 +39,11 @@
 	<resultMap type="dev.itboot.rest.model.User" id="userMap">
 		<id column="user_id" property="userId"/>
 		<result column="user_name" property="userName"/>
-		<result column="u_user_image_path" property="userImagePath"/>
+		<association property="image" resultMap="userImageMap"/>
+	</resultMap>
+	
+	<resultMap type="UserImage" id="userImageMap">
+    	<result column="ui_image_path" property="imagePath"/>
 	</resultMap>
 	
 	<resultMap type="dev.itboot.rest.model.User" id="fUser">
@@ -50,13 +54,15 @@
 	<select id="findFollowingArticle" resultMap="articleMap">
 		select 
 		a.article_id, a.user_id, a.content, a.article_post_date, 
-		u.user_id, u.user_name, u.user_image_path as u_user_image_path, 
+		u.user_id, u.user_name,
+		ui.image_path as ui_image_path,
 		i.image_id, i.article_id as i_article_id, i.image_path, 
 		t.tag_id, t.article_id, t.tag_name, 
 		f.favorite_id, f.user_id as f_user_id, f.article_id as f_article_id,  
 		c.comment_id, c.user_id as c_user_id, c.article_id, c.comment, c.comment_post_date  
 		from articles a 
 		left join users u on a.user_id = u. user_id 
+		left join user_images ui on u.user_id = ui.user_id
 		left join images i on a.article_id = i.article_id 
 		left join tags t on a.article_id = t.article_id 
 		left join favorites f on a.article_id = f.article_id 
@@ -65,10 +71,21 @@
 		<foreach collection="followingIdList" item="followerId" separator=",">
 			${followerId}
 		</foreach>
-		) order by a.article_post_date desc
+		) order by a.article_post_date desc ,a.article_post_date limit 5
 	</select>
 	
-	<insert id="articleInsert" parameterType="Article" useGeneratedKeys="true" keyProperty="articleId">
+	<select id="findByArticle" resultMap="articleMap">
+		select
+		a.article_id, a.user_id, a.content, a.article_post_date, 
+		i.image_id, i.article_id as i_article_id, i.image_path, 
+		t.tag_id, t.article_id, t.tag_name
+		from articles a 
+		left join images i on a.article_id = i.article_id 
+		left join tags t on a.article_id = t.article_id 
+		where a.article_id = #{articleId}
+	</select>
+	
+	<insert id="insertArticle" parameterType="Article" useGeneratedKeys="true" keyProperty="articleId">
 		insert into articles(user_id, content) values(#{userId}, #{content})
 	</insert>
 	

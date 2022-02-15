@@ -8,11 +8,11 @@ public class ArticleForm {
 	
 	private String tag;
 
-	public Long getId() {
+	public Long getUserId() {
 		return userId;
 	}
 
-	public void setId(Long userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 
