@@ -2,18 +2,17 @@ package dev.itboot.rest.model;
 
 public class Password {
 
-	private Long passwordId;
+	private Long userId;
 	
 	private String password;
 
-	public Long getPasswordId() {
-		return passwordId;
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setPasswordId(Long passwordId) {
-		this.passwordId = passwordId;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
-
 
 	public String getPassword() {
 		return password;
@@ -25,8 +24,9 @@ public class Password {
 
 	@Override
 	public String toString() {
-		return "Password [passwordId=" + passwordId + ", password=" + password + "]";
+		return "Password [userId=" + userId + ", password=" + password + "]";
 	}
 	
 	
+
 }

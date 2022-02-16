@@ -59,9 +59,7 @@ public class UserController {
 	@Operation(summary = "ユーザー情報を一件登録します")
 	@PostMapping("")
 	public User insertUser(@RequestBody SignUpForm form) {
-		User user = new User();
-		BeanUtils.copyProperties(form, user);
-		return service.insert(user);
+		return service.insert(form);
 	}
 	
 	@Operation(summary = "ユーザー情報を１件取得します")

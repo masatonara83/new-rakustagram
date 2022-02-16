@@ -7,8 +7,8 @@ export type User = {
   userRegistrationDate: number;
   updateDate: number;
   password: {
-    passwordId: number;
-    password: string
+    user_id: number;
+    password: string;
   };
   image: {
     imagePath: string;

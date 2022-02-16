@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import dev.itboot.rest.exception.NotFoundException;
 import dev.itboot.rest.form.ArticleForm;
 import dev.itboot.rest.model.Article;
 import dev.itboot.rest.service.ArticleService;
@@ -34,8 +35,13 @@ public class ArticleController {
 	
 	@Operation(summary = "画像投稿をします")
 	@PostMapping("")
-	public Article insertArticle(@RequestPart("file") MultipartFile image, @RequestPart("form") ArticleForm form ) throws IOException {
+	public Article insertArticle(@RequestPart("file") MultipartFile image, @RequestPart("form") ArticleForm form ) {
 		
-		return service.insertArticle(form, image);
+		try {
+			return service.insertArticle(form, image);
+		} catch (Exception e) {
+			throw new NotFoundException("ファイルが存在しません");
+		}
+		
 	}
 }

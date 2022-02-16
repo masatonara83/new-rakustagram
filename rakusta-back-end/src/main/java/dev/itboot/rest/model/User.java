@@ -130,10 +130,9 @@ public class User {
 	public String toString() {
 		return "User [userId=" + userId + ", userName=" + userName + ", userFullName=" + userFullName
 				+ ", userOverview=" + userOverview + ", userMailAddress=" + userMailAddress + ", userRegistrationDate="
-				+ userRegistrationDate + ", updateDate=" + updateDate + ", password=" + password + ", image="
-				+ image + ", articleCount=" + articleCount + ", followingCount=" + followingCount
-				+ ", followerCount=" + followerCount + ", followList=" + followList + ", articleList=" + articleList
-				+ "]";
+				+ userRegistrationDate + ", updateDate=" + updateDate + ", password=" + password + ", image=" + image
+				+ ", articleCount=" + articleCount + ", followingCount=" + followingCount + ", followerCount="
+				+ followerCount + ", followList=" + followList + ", articleList=" + articleList + "]";
 	}
 	
 	

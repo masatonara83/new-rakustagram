@@ -37,7 +37,7 @@ public interface UserMapper {
 	 * @param user
 	 * @return 自動採番されたuserIdがUserモデルにセットされる
 	 */
-	public Integer insert(User user);
+	public Long insert(User user);
 	
 	/**
 	 * ユーザー情報を更新します

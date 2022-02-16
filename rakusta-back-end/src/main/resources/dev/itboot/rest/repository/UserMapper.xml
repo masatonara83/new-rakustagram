@@ -31,7 +31,7 @@
     </resultMap>
     
     <resultMap type="dev.itboot.rest.model.Password" id="passwordMap">
-    	<id column="password_id" property="passwordId" />
+    	<result column="user_id" property="userId" />
     	<result column="password" property="password"/>
     </resultMap>
     
@@ -44,6 +44,7 @@
 	<select id="findAllUsers"  resultType="User">
 		SELECT * from users
 	</select>
+	
 	
 	<select id="findById" resultMap="userMap">
 		select 
@@ -64,21 +65,21 @@
 		u.user_id, u.user_name, u.user_full_name, u.user_mail_address ,u.user_overview,
 		ui.image_path as ui_image_path
 		FROM users u
-		left join passwords p on u.password = p.password_id
+		left join passwords p on u.user_id = p.user_id
 		left join user_images ui on u.user_id = ui.user_id
 		where u.user_mail_address = #{userMailAddress} and p.password = #{password}
 	</select>
 	
 	<select id="findByUserIdAndPassword" resultMap="userMap">
 		SELECT
-		u.user_id, u.user_name, p.password_id, p.password 
+		u.user_id, u.user_name, p.password 
 		from users u 
-		left join passwords p on u.password = p.password_id
+		left join passwords p on u.user_id = p.user_id
 		where u.user_id = #{userId} and p.password = #{password}
 	</select>
 	
 	<insert id="insert" useGeneratedKeys="true" keyProperty="userId" parameterType="User">
-		insert into users(user_name, user_full_name, user_mail_address, user_password) values (#{userName}, #{userFullName}, #{userMailAddress}, #{userPassword})
+		insert into users(user_name, user_full_name, user_mail_address) values (#{userName}, #{userFullName}, #{userMailAddress})
 	</insert>
 	
 	

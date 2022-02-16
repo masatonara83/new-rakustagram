@@ -5,19 +5,16 @@ create table users (
   user_full_name varchar(50) not null,
   user_overview text,
   user_mail_address varchar(100) unique not null,
-  user_password varchar(50) not null,
   user_registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   update_date DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   primary key(user_id)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 create table passwords (
-	password_id serial not null,
     user_id BIGINT unsigned not null,
-    password text not null,
-    primary key(password_id),
+    password varchar(50) not null,
     foreign key fk_user_id(user_id) references users(user_id)
-) ENGINE = InnoDB DEFAULT CHARSET = utf8;passwords
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 create table user_images (
 	user_image_id serial not null,

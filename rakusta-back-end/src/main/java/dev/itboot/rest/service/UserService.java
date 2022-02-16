@@ -2,6 +2,7 @@ package dev.itboot.rest.service;
 
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +25,7 @@ public class UserService {
 	@Autowired
 	private PasswordMapper passwordMapper;
 	
+	
 	public User findById(Long userId) {
 		User user = mapper.findById(userId);
 		User count = countCheck(userId);
@@ -37,11 +39,23 @@ public class UserService {
 		return mapper.findAllUsers();
 	}
 	
+	/**
+	 * 新規ユーザー登録を行う
+	 * @param form
+	 * @return
+	 */
 	public User insert(SignUpForm form) {
-		Password password = new Password();
-		password.setPassword(form.getPassword());
+		User user = new User();
+		BeanUtils.copyProperties(form, user);
 		mapper.insert(user);
-		return mapper.findById(user.getUserId());
+		
+		Password password = new Password();
+		password.setUserId(user.getUserId());
+		password.setPassword(form.getPassword());
+		passwordMapper.insertPassword(password);
+		
+		
+		return mapper.findByUserIdAndPassword(user.getUserId(), password.getPassword());
 	}
 	
 	public User saveUser(User putUser) {
