@@ -10,6 +10,7 @@ export const UseAuth = () => {
   const history = useHistory();
   const {showMessage} = UseMassage();
   const {setLoginUser} = useLoginUser()
+  const [userId, setUserId] = useState(0)
 
   const [loading, setLoading] = useState(false);
 

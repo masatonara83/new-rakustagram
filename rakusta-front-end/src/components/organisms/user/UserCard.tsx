@@ -1,11 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Box, Flex, Image, Stack, Text, Spacer  } from "@chakra-ui/react";
-import { memo, VFC } from "react";
+import { Box, Flex, Image, Stack, Text, Spacer, Wrap, WrapItem, Link  } from "@chakra-ui/react";
+import { memo, useCallback, VFC } from "react";
 import { ImagePath } from "../../../types/api/imagePath";
 import Slider from "react-slick";
+import {AiFillTag} from 'react-icons/ai'
+import {BsFillPencilFill} from 'react-icons/bs'
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css"
+import { Tag } from "../../../types/api/tag";
 
 type Props = {
   articleId: number;
@@ -13,7 +16,8 @@ type Props = {
   content: string;
   userImage: string;
   articleUserName: string;
-  imageList: Array<ImagePath>
+  imageList: Array<ImagePath>;
+  tagList: Array<Tag>;
 }
 
 export const UserCard: VFC<Props> = memo((props) => {
@@ -23,8 +27,10 @@ export const UserCard: VFC<Props> = memo((props) => {
     dots: true,
   }
 
+  const {articleId, userId, content, userImage ,imageList, articleUserName, tagList} = props;
 
-  const {articleId, userId, content, userImage ,imageList, articleUserName} = props;
+  const onClickTagSearch = useCallback(() => {}, [])
+
   return (
     <Box
       w="700px"
@@ -51,7 +57,26 @@ export const UserCard: VFC<Props> = memo((props) => {
         </Slider>
         <Spacer />
         <Box p={4} align="start">
-          <Text fontSize="lg" fontWeight="bold" color="black">{content}</Text>
+          <Wrap>
+            <WrapItem>
+              <Box mr="5">
+                {<BsFillPencilFill  size="25" color="gray" />}
+              </Box>
+              <Text fontSize="lg" fontWeight="bold" color="black">{content}</Text>
+            </WrapItem>
+          </Wrap>
+        </Box>
+        <Box p={4} align="start">
+          <Wrap>
+            <WrapItem >
+              <Box  mr="5">
+                {<AiFillTag size="25" color="gray"/>}
+              </Box>
+              {tagList.map((tag) => (
+                <Link mr="5" fontSize="lg" fontWeight="bold" _hover={{cursor: "pointer"}} onClick={onClickTagSearch}>{tag.tagName}</Link>
+              ))}
+              </WrapItem>
+         </Wrap>
         </Box>
       </Stack>
 

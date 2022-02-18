@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Box, Button, Divider, Grid, GridItem, Image, Spacer, Text, Wrap, WrapItem } from "@chakra-ui/react";
+import { Box, Button,Divider, Grid, GridItem, Image, Spacer, Text, Wrap, WrapItem } from "@chakra-ui/react";
 import { memo, useCallback, useEffect, VFC } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import Slider from "react-slick";
@@ -12,7 +12,7 @@ interface RouterParams {
 export const UserShowPage: VFC = memo(() => {
 
   const history = useHistory()
-  const {selectUser, getUser} = UseUserProfile()
+  const {selectUser, getUser, loading} = UseUserProfile()
   const {id} = useParams<RouterParams>()
 
   useEffect(() => getUser(Number(id)),[getUser])

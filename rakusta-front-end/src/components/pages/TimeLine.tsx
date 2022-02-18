@@ -1,28 +1,36 @@
 import { Box, Button, Center, Image, Spacer, Spinner, Stack, Text, Wrap, WrapItem } from "@chakra-ui/react";
-import { memo, useEffect, useState, VFC } from "react";
+import { memo, useCallback, useEffect, useState, VFC } from "react";
+import { useHistory } from "react-router-dom";
+import { UseAnotherUserList } from "../../hooks/useAnotherUserList";
 import { useLoginUser } from "../../hooks/useLoginUser";
 import { UseTimeLine } from "../../hooks/useTimeLine";
+import { NotFollowList } from "../organisms/follow/NotFollowList";
 import { UserCard } from "../organisms/user/UserCard";
 
 export const TimeLine: VFC = memo(() => {
 
+  const history = useHistory()
+
   const {loginUser} = useLoginUser()
   const {getFollowArticles, articleList, loading} = UseTimeLine()
+  const {getNotFollowList, notFollowUserList} = UseAnotherUserList()
 
   const [userId, setUserId] = useState<number>(0);
 
 
   useEffect(() => { 
-    console.log(userId)
-    getFollowArticles(userId)
+    getFollowArticles(5)
+    getNotFollowList(5)
   }
-  ,[getFollowArticles,loginUser,userId])
+  ,[getFollowArticles,getNotFollowList,loginUser,userId])
 
   useEffect(() => {
     setUserId(loginUser?.userId ?? 0)
   },[loginUser,userId])
 
-  console.log(localStorage.getItem('KEY_LOGIN_USER'))
+  const onClickUser = useCallback((userId: number) => {
+    history.push('rakustagram/user/' + userId)
+  },[])
 
   return (
     <>
@@ -48,21 +56,23 @@ export const TimeLine: VFC = memo(() => {
               content={article.content}
               articleUserName={article.user.userName}
               userImage={
-                article.user.image.imagePath? article.user.image.imagePath
+                article.user.image.imagePath === null ? `${process.env.PUBLIC_URL}/no_image.png`
                  :
-                 `${process.env.PUBLIC_URL}/no_image.png`}
-              imageList={article.imageList}/>
+                 article.user.image.imagePath}
+              imageList={article.imageList}
+              tagList={article.tagList}
+              />
           </WrapItem >
         ))}
       </Stack>
       <WrapItem p={4}>
         <Stack>
           <Wrap>
-            <Image src="https://source.unsplash.com/random" alt="loginUserImage" boxSize="100px" borderRadius="full" />
+            <Image src={loginUser?.image.imagePath} alt="loginUserImage" boxSize="100px" borderRadius="full" />
             <Stack>
-              <Box ml={5} my="auto">
-                <Text fontWeight="bold" fontSize="lg">ユーザー名</Text>
-                <Text color="gray.500">ユーザーフルネーム</Text>
+              <Box ml={5} my="auto" w="200px">
+                <Text fontWeight="bold" fontSize="lg">{loginUser?.userName}</Text>
+                <Text color="gray.500">{loginUser?.userFullName}</Text>
               </Box>
             </Stack>
           </Wrap>
@@ -72,26 +82,16 @@ export const TimeLine: VFC = memo(() => {
             <Spacer />
             <Text fontWeight="bold" mr="3">すべて見る</Text>
           </Wrap>
-          <Wrap spacing={4}>
-            <Image src="https://source.unsplash.com/random" alt="loginUserImage" boxSize="50px" borderRadius="full" />
-            <Stack>
-              <Box my="auto">
-                <Text fontWeight="bold" fontSize="lg">ユーザー名</Text>
-                <Text color="gray.500">ユーザーフルネーム</Text>
-              </Box>
-            </Stack>
-            <Button  color="teal" w="150px" variant='ghost' _hover={{opacity: 0.8}} >フォローする</Button>
-          </Wrap>
-          <Wrap spacing={4}>
-            <Image src="https://source.unsplash.com/random" alt="loginUserImage" boxSize="50px" borderRadius="full" />
-            <Stack>
-              <Box my="auto">
-                <Text fontWeight="bold" fontSize="lg">ユーザー名</Text>
-                <Text color="gray.500">ユーザーフルネーム</Text>
-              </Box>
-            </Stack>
-            <Button color="teal" w="150px" variant='ghost' _hover={{opacity: 0.8, outline: 'none'}} >フォローする</Button>
-          </Wrap>
+          {notFollowUserList?.map((notFollowUser) => (
+            <NotFollowList 
+              id={notFollowUser.userId} 
+              userName={notFollowUser.userName} 
+              imagePath={
+                `${process.env.PUBLIC_URL}/no_image.png`
+              }
+              onClick={onClickUser}
+              />
+          ))}
         </Stack>
       </WrapItem>
     </Wrap>

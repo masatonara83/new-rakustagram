@@ -1,5 +1,6 @@
 import { Box, Container, FormControl, Grid, GridItem, Heading, Image, Stack } from "@chakra-ui/react";
 import { ChangeEvent, memo, useCallback, useEffect, useState, VFC } from "react";
+import { useLoginUser } from "../../hooks/useLoginUser";
 import { UsePutUserProfile } from "../../hooks/usePutUserProfile";
 import { UseUserProfile } from "../../hooks/useUserProfile";
 import { PrimaryButton } from "../atoms/botton/PrimarButton";
@@ -7,6 +8,7 @@ import { UserEditSideBar } from "../organisms/user/EditSideBar";
 
 export const UserImageChange:VFC = memo(() => {
 
+  const {loginUser} = useLoginUser()
   const {loading, putUserImage} = UsePutUserProfile()
   const {getUser, selectUser} = UseUserProfile()
   const FormData = require('form-data')
@@ -15,28 +17,27 @@ export const UserImageChange:VFC = memo(() => {
   const [imagePath, setImagePath] = useState<File | string>('');
   const [preview, setPreview] = useState('');
 
-  useEffect(() => getUser(5),[getUser])
-
-  useEffect(() => {
-    setPreview(selectUser?.image.imagePath ?? '')
-    setUserId(selectUser?.userId ?? 0)
-  }, [selectUser])
-
+  const onClickImagePost = useCallback(() => {
+    const data = new FormData();
+    data.append('image', imagePath);
+    data.append('userId', new Blob([JSON.stringify(loginUser?.userId)],{type : 'application/json'}))
+    putUserImage(data);
+  },[imagePath])
 
   const getImage = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     if(!e.target.files) return
     const img: File = e.target.files[0]
-    setImagePath(img)
+    setImagePath(img) 
     setPreview(window.URL.createObjectURL(img))
   },[preview,imagePath])
 
-  const onClickImagePost = useCallback(() => {
-    const data = new FormData();
-    data.append('image', imagePath);
-    data.append('userId', new Blob([JSON.stringify(5)],{type : 'application/json'}))
+  useEffect(() => getUser(loginUser?.userId as number),[getUser])
 
-    putUserImage(data);
-  },[imagePath, userId])
+  useEffect(() => {
+    setPreview(selectUser?.image.imagePath ?? '')
+  }, [selectUser])
+
+
 
   return (
     <Container maxW='container.lg'>
@@ -56,7 +57,7 @@ export const UserImageChange:VFC = memo(() => {
         </GridItem>
         <GridItem colSpan={2} border="1px" borderColor="gray.300" justify="center">
           <Stack p={10} spacing={8} >
-            <Heading as="h3">rakus</Heading>
+            <Heading as="h3">{loginUser?.userName}</Heading>
             <Box >
               <Image boxSize="400px" borderRadius="full" mx="auto" src={preview  ? preview : (`${process.env.PUBLIC_URL}/no_image.png`)}/>
             </Box>

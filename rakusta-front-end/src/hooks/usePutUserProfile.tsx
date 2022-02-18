@@ -48,6 +48,7 @@ export const UsePutUserProfile = () => {
 
   const putUserImage = useCallback((data) => {
     setLoading(true);
+    console.log(data)
     axios.put(api+ '/user/image', data).then((res) => {
       showMessage({title: "プロフィールを更新しました", status: "success"})
       history.push('/rakustagram/account/image')

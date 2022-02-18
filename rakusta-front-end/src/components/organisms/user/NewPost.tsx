@@ -44,8 +44,7 @@ export const NewPost: VFC<Props> = memo((props) => {
     }
     data.append('form', new Blob([JSON.stringify(form)],{type : 'application/json'}))
 
-    articlePost({data, onClose})
-    onClickCloseNewPost()
+    articlePost({data, onClose, onClickCloseNewPost})
   }, [image,content,tag])
 
   const onClickCloseNewPost = useCallback(() => {

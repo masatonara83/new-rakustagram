@@ -25,7 +25,6 @@
       followerCount: number;
       followList: [
         {
-          followId: number;
           followingId: number;
           followerId: number;
           user: string
@@ -37,14 +36,12 @@
     };
     imageList: [
       {
-        imageId: number;
         articleId: number;
         imagePath: string
       }
     ];
     tagList: [
       {
-        tagId: number;
         articleId: number;
         tagName: string
       }
