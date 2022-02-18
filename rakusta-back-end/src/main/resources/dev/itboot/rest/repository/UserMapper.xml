@@ -16,18 +16,6 @@
         <result column="update_date" property="updateDate"/>
         <association property="password" resultMap="passwordMap"></association>
         <association property="image" resultMap="userImageMap"></association>
-        <collection property="articleList" ofType="Article">
-        	<id column="article_id" property="articleId"></id>
-	        <result column="user_id" property="userId"></result>
-	       	<result column="content" property="content"></result>
-	       	<result column="article_post_date" property="articlePostDate"></result>
-	       	<result column="count_id" property="count_id"></result>
-	       	<collection property="imageList" ofType="Image">
-	       		<id column="image_id" property="imageId"></id>
-	       		<id column="i_article_id" property="articleId"></id>
-	       		<result column="image_path" property="imagePath"></result>
-       		</collection>
-        </collection>
     </resultMap>
     
     <resultMap type="dev.itboot.rest.model.Password" id="passwordMap">
@@ -46,18 +34,13 @@
 	</select>
 	
 	
-	<select id="findById" resultMap="userMap">
+	<select id="findByUser" resultMap="userMap">
 		select 
 		u.user_id, u.user_name, u.user_full_name, u.user_mail_address ,u.user_overview,
-		ui.image_path as ui_image_path,
-		a.article_id, a.content,
-		i.image_id, i.image_path 
+		ui.image_path as ui_image_path
 		from users u 
 		left join user_images ui on u.user_id = ui.user_id
-		left join articles a on u.user_id = a.user_id 
-		left join images i on a.article_id = i.article_id  
-		where a.user_id = #{userId}  
-		order by a.article_post_date desc
+		where u.user_id = #{userId}  
 	</select>
 	
 	<select id="loginAuth" resultMap="userMap">
@@ -92,12 +75,16 @@
 	
 	
 	<select id="notFollowingUsers" resultType="User">
-		select user_id, user_name, user_image_path from users 
-		where user_id not in (
-		<foreach collection="followingUserIdList" item="followingUserId" separator=",">
-			${followingUserId}
-		</foreach>
-		) and user_id != #{userId}
+		select 
+		u.user_id, u.user_name, 
+		ui.image_path as ui_image_path, 
+		count(f.follower_id)  
+		from users u left join user_images ui on u.user_id = ui.user_id  
+		LEFT JOIN follows f on u.user_id = f.follower_id 
+		where u.user_id not in (SELECT follower_id from follows where following_id = #{userId}) 
+		and u.user_id != #{userId} 
+		group by u.user_id 
+		order by count(f.follower_id) desc limit 5;
 	</select>
 	
 	<resultMap type="User" id="countMap">

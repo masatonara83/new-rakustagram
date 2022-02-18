@@ -28,8 +28,6 @@ public class FollowService {
 	}
 	
 	public List<User> notFollowingUser(Long userId) {
-		List<Follow> followingList = findByAllFollowing(userId);
-		List<Long> followerIdList = followingList.stream().map(f -> f.getFollowerId()).collect(Collectors.toList());
-		return userMapper.notFollowingUsers(followerIdList, userId);
+		return userMapper.notFollowingUsers(userId);
 	}
 }

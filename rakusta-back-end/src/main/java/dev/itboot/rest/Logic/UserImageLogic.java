@@ -11,6 +11,10 @@ public class UserImageLogic {
 	
 	@Autowired
 	private  UserImageMapper userImageMapper;
+	
+	public void insertUserImage(UserImage userImage) {
+		userImageMapper.insertUserImage(userImage);
+	}
 
 	public void saveUserImage(UserImage userImage) {
 		

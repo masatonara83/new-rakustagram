@@ -65,7 +65,6 @@ public class UserController {
 	@Operation(summary = "ユーザー情報を１件取得します")
 	@GetMapping("/{userId}")
 	public User findById(@PathVariable Long userId) {
-		
 		User user = service.findById(userId);
 		session.setAttribute("LoginUser", user);
 		return user;
@@ -80,6 +79,7 @@ public class UserController {
 	@Operation(summary = "ユーザーのプロフィール画像を更新します")
 	@PutMapping("/image")
 	public User saveImage(@RequestPart("image") MultipartFile image, @RequestPart("userId") Long userId) throws IOException{
+		System.out.println(image);
 		return userImageService.saveUserImage(image, userId);
 	}
 	

@@ -17,7 +17,8 @@ public interface UserMapper {
 	 * @param userId
 	 * @return 検索したユーザー情報
 	 */
-	public User findById(@Param("userId") Long userId);
+	public User findByUser(@Param("userId") Long userId);
+	
 	
 	/**
 	 * ログイン認証
@@ -51,8 +52,7 @@ public interface UserMapper {
 	 * @param userId
 	 * @return フォローしていないユーザー情報が返されます
 	 */
-	public List<User> notFollowingUsers(
-			@Param("followingUserIdList") List<Long> followingUserIdList, 
+	public List<User> notFollowingUsers( 
 			@Param("userId") Long userId);
 	
 	/**

@@ -35,13 +35,10 @@ public class ArticleController {
 	
 	@Operation(summary = "画像投稿をします")
 	@PostMapping("")
-	public Article insertArticle(@RequestPart("file") MultipartFile image, @RequestPart("form") ArticleForm form ) {
+	public Article insertArticle(@RequestPart("file") MultipartFile image, @RequestPart("form") ArticleForm form ) throws IOException {
 		
-		try {
-			return service.insertArticle(form, image);
-		} catch (Exception e) {
-			throw new NotFoundException("ファイルが存在しません");
-		}
+		return service.insertArticle(form, image);
+		
 		
 	}
 }

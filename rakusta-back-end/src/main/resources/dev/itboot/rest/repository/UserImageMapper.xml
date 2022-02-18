@@ -6,10 +6,14 @@
 
 <mapper namespace="dev.itboot.rest.repository.UserImageMapper">
 
-	<update id="saveUserImage">
+	<insert id="insertUserImage" parameterType="UserImage">
+		insert into user_images (user_id, image_path) values (#{userId}, #{imagePath});
+	</insert>
+
+	<update id="saveUserImage" parameterType="UserImage">
 		update user_images 
 		set image_path = #{imagePath}
-		where user_id = #{userId}
+		where user_id = #{userId};
 	</update>
 	
 </mapper>

@@ -7,17 +7,10 @@ package dev.itboot.rest.model;
  */
 public class Tag {
 
-	private Long tagId;
 	private Long articleId;
 	private String 	tagName;
 	
 	//getter and setter
-	public Long getTagId() {
-		return tagId;
-	}
-	public void setTagId(Long tagId) {
-		this.tagId = tagId;
-	}
 	public Long getArticleId() {
 		return articleId;
 	}
@@ -32,7 +25,7 @@ public class Tag {
 	}
 	@Override
 	public String toString() {
-		return "Tag [tagId=" + tagId + ", articleId=" + articleId + ", tagName=" + tagName + "]";
+		return "Tag [" +  ", articleId=" + articleId + ", tagName=" + tagName + "]";
 	}
 	
 	

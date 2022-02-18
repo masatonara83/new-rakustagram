@@ -14,5 +14,7 @@ public interface ArticleMapper {
 	
 	public Long insertArticle(Article article);
 	
+	public List<Article> findByArticleList(Long userId);
+	
 	public Article findByArticle(Long articleId);
 }

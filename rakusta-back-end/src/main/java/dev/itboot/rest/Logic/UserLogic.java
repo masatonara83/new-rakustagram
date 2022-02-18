@@ -13,7 +13,7 @@ public class UserLogic {
 	private UserMapper userMapper;
 	
 	public User findByUser(Long userId) {
-		return userMapper.findById(userId);
+		return userMapper.findByUser(userId);
 	}
 	
 	public User findByUserIdAndPassword(Long userId, String password) {
