@@ -46,12 +46,20 @@ public class ArticleService {
 		return articleMapper.findFollowingArticle(followerIdList);
 	}
 	
+	/**
+	 * 画像記事をINSERT処理
+	 * @param form
+	 * @param file
+	 * @return 投稿内容
+	 * @throws IOException
+	 */
 	public Article insertArticle(ArticleForm form, MultipartFile file) throws IOException {
+		//記事の内容のみ投稿
 		Article article = new Article();
 		BeanUtils.copyProperties(form, article);
-		
 		articleMapper.insertArticle(article);
 		
+		//tagをINSERTする処理
 		String[] tagArray = ConversionUtil.stringConversion(form.getTag());
 		if(tagArray != null) {
 			for (String string : tagArray) {
@@ -77,5 +85,9 @@ public class ArticleService {
 	
 	public Article findByArticle(Long articleId) {
 		return articleMapper.findByArticle(articleId);
+	}
+	
+	public List<Article> findByTagArticles(String tagName){
+		return articleMapper.findByTagArticles(tagName);
 	}
 }

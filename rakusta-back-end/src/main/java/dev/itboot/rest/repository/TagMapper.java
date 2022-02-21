@@ -8,4 +8,5 @@ import dev.itboot.rest.model.Tag;
 public interface TagMapper {
 
 	public void insertTag(Tag tag);
+	
 }

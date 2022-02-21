@@ -17,4 +17,6 @@ public interface ArticleMapper {
 	public List<Article> findByArticleList(Long userId);
 	
 	public Article findByArticle(Long articleId);
+	
+	public List<Article> findByTagArticles(String tagName);
 }

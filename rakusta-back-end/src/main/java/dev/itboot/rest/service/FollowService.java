@@ -28,6 +28,7 @@ public class FollowService {
 	}
 	
 	public List<User> notFollowingUser(Long userId) {
-		return userMapper.notFollowingUsers(userId);
+		List<User> userList = userMapper.notFollowingUsers(userId);
+		return userList;
 	}
 }

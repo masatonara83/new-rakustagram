@@ -24,7 +24,7 @@
     </resultMap>
     
     <resultMap type="dev.itboot.rest.model.UserImage" id="userImageMap">
-    	<result column="user_id" property="userId" />
+    	<result column="ui_user_id" property="userId" />
     	<result column="ui_image_path" property="imagePath"/>
     </resultMap>
 	
@@ -73,12 +73,10 @@
 		where user_id = #{userId}
 	</update>
 	
-	
-	<select id="notFollowingUsers" resultType="User">
+	<!--  フォローしていない人気ユーザーを5件まで表示 -->
+	<select id="notFollowingUsers" resultMap="userMap">
 		select 
-		u.user_id, u.user_name, 
-		ui.image_path as ui_image_path, 
-		count(f.follower_id)  
+		u.user_id, u.user_name, ui.image_path as ui_image_path
 		from users u left join user_images ui on u.user_id = ui.user_id  
 		LEFT JOIN follows f on u.user_id = f.follower_id 
 		where u.user_id not in (SELECT follower_id from follows where following_id = #{userId}) 

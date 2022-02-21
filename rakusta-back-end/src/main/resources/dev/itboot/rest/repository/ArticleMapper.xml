@@ -70,7 +70,7 @@
 		<foreach collection="followingIdList" item="followerId" separator=",">
 			${followerId}
 		</foreach>
-		) order by a.article_post_date desc limit 20
+		) order by a.article_post_date desc limit 10
 	</select>
 	
 	<select id="findByArticle" resultMap="articleMap">
@@ -95,6 +95,14 @@
 		where a.user_id = #{userId}
 	</select>
 	
+	<select id="findByTagArticles" resultMap="articleMap">
+		select 
+		a.article_id, i.image_path
+		from articles a left join images i on a.article_id = i.article_id
+		left join tags t on a.article_id = t.article_id
+		where t.tag_name = #{tagName}
+		order by a.article_post_date desc limit 21;
+	</select>
 	
 	<insert id="insertArticle" parameterType="Article" useGeneratedKeys="true" keyProperty="articleId">
 		insert into articles(user_id, content) values(#{userId}, #{content})
