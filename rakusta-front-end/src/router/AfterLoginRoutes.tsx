@@ -1,8 +1,8 @@
 import { TimeLine } from "../components/pages/TimeLine";
-import { UserEdit } from "../components/pages/UserEdit";
-import { UserImageChange } from "../components/pages/UserImageChange";
-import { UserPasswordChange } from "../components/pages/UserPasswordChange";
-import { UserShowPage } from "../components/pages/UserShow";
+import { UserEdit } from "../components/pages/user/UserEdit";
+import { UserImageChange } from "../components/pages/user/UserImageChange";
+import { UserPasswordChange } from "../components/pages/user/UserPasswordChange";
+import { UserShowPage } from "../components/pages/user/UserShow";
 
 export const afterLoginRoutes = [
   {

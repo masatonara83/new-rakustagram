@@ -3,7 +3,8 @@ import { Box, Button,Divider, Grid, GridItem, Image, Spacer, Text, Wrap, WrapIte
 import { memo, useCallback, useEffect, VFC } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import Slider from "react-slick";
-import { UseUserProfile } from "../../hooks/useUserProfile";
+import { useLoginUser } from "../../../hooks/useLoginUser";
+import { UseUserProfile } from "../../../hooks/useUserProfile";
 
 interface RouterParams {
   id: string
@@ -11,6 +12,7 @@ interface RouterParams {
 
 export const UserShowPage: VFC = memo(() => {
 
+  const {loginUser} = useLoginUser()
   const history = useHistory()
   const {selectUser, getUser, loading} = UseUserProfile()
   const {id} = useParams<RouterParams>()
@@ -27,13 +29,16 @@ export const UserShowPage: VFC = memo(() => {
     gap={4}
     mt={10}>
       <GridItem rowSpan={2} colSpan={2} pt={6}>
-        <Image src={selectUser?.image.imagePath} alt="loginUserImage" boxSize="250px" borderRadius="full" mx="auto" shadow="md" />
+        <Image src={selectUser?.image.imagePath !== '' ? selectUser?.image.imagePath : `${process.env.PUBLIC_URL}/no_image.png`} alt="loginUserImage" boxSize="250px" borderRadius="full" mx="auto" shadow="md" />
       </GridItem>
       <GridItem colSpan={1} align="center" p={9}>
         <Text fontSize="40px" fontWeight="bold">{selectUser?.userName}</Text>
       </GridItem>
       <GridItem colSpan={2} pt={10} px={5}>
-        <Button w="80%" h="50px" shadow="md" fontSize="20px" onClick={onClickEdit}>プロフィールを編集</Button>
+        {Number(id) === loginUser?.userId ? (<Button w="80%" h="50px" shadow="md" fontSize="20px" onClick={onClickEdit}>プロフィールを編集</Button>) 
+        : (
+          <Button w="80%" h="50px" shadow="md" fontSize="20px" onClick={onClickEdit}>フォローする</Button>)
+        }
       </GridItem>
       <GridItem colSpan={3} ml={10}>
         <Wrap justify="center" mt={8}>
@@ -53,8 +58,7 @@ export const UserShowPage: VFC = memo(() => {
       </GridItem>
     </Grid>
     <Divider orientation='horizontal' bg="black" />
-
-    <Wrap spacing='30px' p={{base: 4, md: 10}} justify="center" >
+      <Wrap spacing='30px' p={{base: 4, md: 10}} justify="center" >
       {selectUser?.articleList.map((article) => (
         <WrapItem key={article.articleId}>
           <Slider>

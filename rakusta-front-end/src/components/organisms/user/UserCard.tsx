@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Box, Flex, Image, Stack, Text, Spacer, Wrap, WrapItem, Link  } from "@chakra-ui/react";
-import { memo, useCallback, VFC } from "react";
+import { ChangeEvent, memo, MouseEvent, MouseEventHandler, useCallback, VFC } from "react";
 import { ImagePath } from "../../../types/api/imagePath";
 import Slider from "react-slick";
 import {AiFillTag} from 'react-icons/ai'
@@ -9,6 +9,7 @@ import {BsFillPencilFill} from 'react-icons/bs'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css"
 import { Tag } from "../../../types/api/tag";
+import { UseChangePage } from "../../../hooks/useChangePage";
 
 type Props = {
   articleId: number;
@@ -18,6 +19,7 @@ type Props = {
   articleUserName: string;
   imageList: Array<ImagePath>;
   tagList: Array<Tag>;
+  onClickTag: (e: MouseEvent<HTMLAnchorElement>) => void
 }
 
 export const UserCard: VFC<Props> = memo((props) => {
@@ -27,9 +29,9 @@ export const UserCard: VFC<Props> = memo((props) => {
     dots: true,
   }
 
-  const {articleId, userId, content, userImage ,imageList, articleUserName, tagList} = props;
+  const {articleId, userId, content, userImage ,imageList, articleUserName, tagList, onClickTag} = props;
+  const {onClickTagSearch} = UseChangePage();
 
-  const onClickTagSearch = useCallback(() => {}, [])
 
   return (
     <Box
@@ -73,7 +75,7 @@ export const UserCard: VFC<Props> = memo((props) => {
                 {<AiFillTag size="25" color="gray"/>}
               </Box>
               {tagList.map((tag) => (
-                <Link mr="5" fontSize="lg" fontWeight="bold" _hover={{cursor: "pointer"}} onClick={onClickTagSearch}>{tag.tagName}</Link>
+                <Link mr="5" fontSize="lg" fontWeight="bold" _hover={{cursor: "pointer"}} onClick={(e: MouseEvent<HTMLAnchorElement>) => onClickTag(e)}>{tag.tagName}</Link>
               ))}
               </WrapItem>
          </Wrap>

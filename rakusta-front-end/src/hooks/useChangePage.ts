@@ -15,5 +15,10 @@ export const UseChangePage = () => {
   const onClickPasswordChange = useCallback(() => {
     history.push("/rakustagram/account/password")
   },[])
-  return {onClickEdit, onClickImageChange, onClickPasswordChange}
+
+  const onClickTagSearch = useCallback((tagName: string) => {
+    history.push(`/rakustagram/tag/${tagName}`)
+  },[])
+
+  return {onClickEdit, onClickImageChange, onClickPasswordChange, onClickTagSearch}
 }

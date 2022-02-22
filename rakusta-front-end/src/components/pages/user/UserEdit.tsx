@@ -1,11 +1,11 @@
 import { Box, Container, FormControl, FormLabel, Grid, GridItem, Heading, Input, InputGroup, InputLeftAddon,  Stack, Textarea, } from "@chakra-ui/react";
 import { ChangeEvent, memo, useCallback, useEffect, useState, VFC } from "react";
-import { UseChangePage } from "../../hooks/useChangePage";
-import { UsePutUserProfile } from "../../hooks/usePutUserProfile";
-import { UseUserProfile } from "../../hooks/useUserProfile";
-import { PrimaryButton } from "../atoms/botton/PrimarButton";
-import { InputBox } from "../molecules/InputBox";
-import { UserEditSideBar } from "../organisms/user/EditSideBar";
+import { UseChangePage } from "../../../hooks/useChangePage";
+import { UsePutUserProfile } from "../../../hooks/usePutUserProfile";
+import { UseUserProfile } from "../../../hooks/useUserProfile";
+import { PrimaryButton } from "../../atoms/botton/PrimarButton";
+import { InputBox } from "../../molecules/InputBox";
+import { UserEditSideBar } from "../../organisms/user/EditSideBar";
 
 export const UserEdit:VFC = memo(() => {
 

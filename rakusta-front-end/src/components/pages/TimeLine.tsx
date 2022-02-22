@@ -1,7 +1,8 @@
 import { Box, Button, Center, Image, Spacer, Spinner, Stack, Text, Wrap, WrapItem } from "@chakra-ui/react";
-import { memo, useCallback, useEffect, useState, VFC } from "react";
+import { memo, MouseEvent, MouseEventHandler, useCallback, useEffect, useState, VFC } from "react";
 import { useHistory } from "react-router-dom";
 import { UseAnotherUserList } from "../../hooks/useAnotherUserList";
+import { UseChangePage } from "../../hooks/useChangePage";
 import { useLoginUser } from "../../hooks/useLoginUser";
 import { UseTimeLine } from "../../hooks/useTimeLine";
 import { NotFollowList } from "../organisms/follow/NotFollowList";
@@ -12,6 +13,7 @@ export const TimeLine: VFC = memo(() => {
   const history = useHistory()
 
   const {loginUser} = useLoginUser()
+  const {onClickTagSearch} = UseChangePage()
   const {getFollowArticles, articleList, loading} = UseTimeLine()
   const {getNotFollowList, notFollowUserList} = UseAnotherUserList()
 
@@ -30,6 +32,10 @@ export const TimeLine: VFC = memo(() => {
 
   const onClickUser = useCallback((userId: number) => {
     history.push('rakustagram/user/' + userId)
+  },[])
+
+  const onClickTag = useCallback((e: MouseEvent<HTMLAnchorElement>)=> {
+    console.log(e)
   },[])
 
   return (
@@ -61,6 +67,7 @@ export const TimeLine: VFC = memo(() => {
                  article.user.image.imagePath}
               imageList={article.imageList}
               tagList={article.tagList}
+              onClickTag={onClickTag}
               />
           </WrapItem >
         ))}
@@ -86,7 +93,8 @@ export const TimeLine: VFC = memo(() => {
             <NotFollowList 
               id={notFollowUser.userId} 
               userName={notFollowUser.userName} 
-              imagePath={
+              imagePath={notFollowUser.image.imagePath ? 
+                notFollowUser.image.imagePath :
                 `${process.env.PUBLIC_URL}/no_image.png`
               }
               onClick={onClickUser}

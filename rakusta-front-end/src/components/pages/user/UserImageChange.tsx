@@ -1,10 +1,10 @@
 import { Box, Container, FormControl, Grid, GridItem, Heading, Image, Stack } from "@chakra-ui/react";
 import { ChangeEvent, memo, useCallback, useEffect, useState, VFC } from "react";
-import { useLoginUser } from "../../hooks/useLoginUser";
-import { UsePutUserProfile } from "../../hooks/usePutUserProfile";
-import { UseUserProfile } from "../../hooks/useUserProfile";
-import { PrimaryButton } from "../atoms/botton/PrimarButton";
-import { UserEditSideBar } from "../organisms/user/EditSideBar";
+import { useLoginUser } from "../../../hooks/useLoginUser";
+import { UsePutUserProfile } from "../../../hooks/usePutUserProfile";
+import { UseUserProfile } from "../../../hooks/useUserProfile";
+import { PrimaryButton } from "../../atoms/botton/PrimarButton";
+import { UserEditSideBar } from "../../organisms/user/EditSideBar";
 
 export const UserImageChange:VFC = memo(() => {
 
