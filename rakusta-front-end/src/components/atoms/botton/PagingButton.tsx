@@ -3,22 +3,19 @@ import { memo, VFC } from "react";
 
 type Props = {
   children: string;
-  disabled: boolean;
-  loading? : boolean;
   onClick: () => void;
 }
 
-export const PrimaryButton: VFC<Props> = memo((props) => {
-  const {children, disabled = false, loading = false ,onClick} = props;
+export const PagingButton: VFC<Props> = memo((props) => {
+  const {children, onClick} = props;
   return (
     <Button 
-      bg="teal.200" 
-      color="white" 
+      bg="blue.200" 
+      color="gray.50" 
       w="300px"
       _hover={{opacity: 0.8}} 
-      disabled={disabled || loading}
-      isLoading={loading}
       onClick={onClick}
+      fontSize="xl"
       >
         {children}
     </Button>

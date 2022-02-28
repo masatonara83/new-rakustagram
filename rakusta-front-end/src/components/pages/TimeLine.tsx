@@ -1,7 +1,7 @@
 import { Box, Button, Center, Image, Spacer, Spinner, Stack, Text, Wrap, WrapItem } from "@chakra-ui/react";
 import { memo, MouseEvent, MouseEventHandler, useCallback, useEffect, useState, VFC } from "react";
 import { useHistory } from "react-router-dom";
-import { UseAnotherUserList } from "../../hooks/useAnotherUserList";
+import { UseAnotherUserList } from "../../hooks/useFollow";
 import { UseChangePage } from "../../hooks/useChangePage";
 import { useLoginUser } from "../../hooks/useLoginUser";
 import { UseTimeLine } from "../../hooks/useTimeLine";
