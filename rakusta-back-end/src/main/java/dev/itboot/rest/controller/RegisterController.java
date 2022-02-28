@@ -29,7 +29,7 @@ public class RegisterController {
 	@Operation(summary = "ユーザーを登録します")
 	@PostMapping("")
 	public User register(@RequestBody SignUpForm form) {
-		System.out.println(form);
-		return null;
+		
+		return userService.insert(form);
 	}
 }
