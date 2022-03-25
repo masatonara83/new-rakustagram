@@ -1,5 +1,6 @@
 import axios from "axios"
 import { useCallback, useState } from "react"
+import { useCookies } from "react-cookie";
 import { useHistory } from "react-router-dom";
 import { LoginForm } from "../types/api/loginForm";
 import { User } from "../types/api/user"
@@ -10,22 +11,18 @@ export const UseAuth = () => {
   const history = useHistory();
   const {showMessage} = UseMassage();
   const {setLoginUser} = useLoginUser()
-  const [userId, setUserId] = useState(0)
+  const [setCookie] = useCookies(['id'])
 
   const [loading, setLoading] = useState(false);
+  const [id, setId] = useState("")
 
   const login = useCallback((loginForm: LoginForm) => {
-    const {userMailAddress, password} = loginForm;
     setLoading(true)
-    axios.get<User>('http://localhost:8080/api/v1/login/', {
-      params: {
-        userMailAddress: userMailAddress,
-        password: password
-      }
-    })
+    axios.post<User>('http://localhost:8080/api/v1/login/', loginForm)
     .then((res) => {
       if(res.data) {
         setLoginUser(res.data)
+        setId(res.data.userName)
         showMessage({title: "ログインに成功しました", status: "success"});
         history.push("/rakustagram")
       } else {

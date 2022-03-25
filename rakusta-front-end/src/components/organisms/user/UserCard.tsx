@@ -52,6 +52,7 @@ export const UserCard: VFC<Props> = memo((props) => {
         <Slider {...settings}>
           {imageList.map((image) => (
             <Image
+              key={image.articleId}
               boxSize="600px"
               src={image.imagePath}
             />
@@ -75,7 +76,7 @@ export const UserCard: VFC<Props> = memo((props) => {
                 {<AiFillTag size="25" color="gray"/>}
               </Box>
               {tagList.map((tag) => (
-                <Link mr="5" fontSize="lg" fontWeight="bold" _hover={{cursor: "pointer"}} onClick={(e: MouseEvent<HTMLAnchorElement>) => onClickTag(e)}>{tag.tagName}</Link>
+                <Link key={tag.articleId} mr="5" fontSize="lg" fontWeight="bold" _hover={{cursor: "pointer"}} onClick={(e: MouseEvent<HTMLAnchorElement>) => onClickTag(e)}>{tag.tagName}</Link>
               ))}
               </WrapItem>
          </Wrap>

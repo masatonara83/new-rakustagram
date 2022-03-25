@@ -3,9 +3,7 @@ package dev.itboot.rest.controller;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,9 +36,6 @@ public class UserController {
 		return new SignUpForm();
 	}
 	
-	@Autowired
-	private HttpSession session;
-
 	@Autowired
 	private UserService service;
 	
